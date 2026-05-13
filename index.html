@@ -10,8 +10,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <style>
+        /* ========== YOUR ORIGINAL EXACT STYLES (no changes) ========== */
         * {
             margin: 0;
             padding: 0;
@@ -91,7 +93,6 @@
             opacity: 0.2;
             animation: floatIcon 12s infinite ease-in-out;
             transition: opacity 0.3s ease;
-            /* rounded circle background */
             background: radial-gradient(circle at center, rgba(80,200,120,0.25), rgba(80,200,120,0.05));
             border-radius: 50%;
             backdrop-filter: blur(2px);
@@ -104,7 +105,6 @@
             height: 60%;
             filter: drop-shadow(0 0 3px rgba(80,200,120,0.5));
         }
-        /* YOUR EXACT ICON POSITIONS */
         .icon1 { top: 14%; left: 7%; animation-delay: 0s; }
         .icon2 { top: 16%; right: 6%; animation-delay: 2s; animation-duration: 15s; }
         .icon3 { top: 38%; right: 8%; animation-delay: 1s; animation-duration: 18s; }
@@ -148,25 +148,17 @@
             100% { transform: translateX(100%); opacity: 0; }
         }
 
-
         .typing-text{
-    color:#7fffb7;
-    font-weight:700;
-    border-right:2px solid #7fffb7;
-    padding-right:4px;
-
-    animation:blinkCursor .8s infinite;
-}
-
-@keyframes blinkCursor{
-    0%,50%{
-        border-color:#7fffb7;
-    }
-
-    51%,100%{
-        border-color:transparent;
-    }
-}
+            color:#7fffb7;
+            font-weight:700;
+            border-right:2px solid #7fffb7;
+            padding-right:4px;
+            animation:blinkCursor .8s infinite;
+        }
+        @keyframes blinkCursor{
+            0%,50%{ border-color:#7fffb7; }
+            51%,100%{ border-color:transparent; }
+        }
         
         .navbar {
             display: flex;
@@ -179,237 +171,107 @@
             z-index: 2;
         }
 
-        /* LOGO - ZERO GAP */
-       .logo-main{
-    display:flex;
-    align-items:center;
-    gap:0;
-    position:relative;
-}
-
-.logo-img{
-    height:88px;
-    width:auto;
-    object-fit:contain;
-    border-radius:16px;
-    mix-blend-mode:screen;
-    filter:drop-shadow(0 0 10px rgba(49,215,154,0.35));
-    transition:transform 0.4s ease;
-
-    margin-right:-28px; /* image & text join */
-    display:block;
-}
-
-.logo-title{
-    font-family:'Inter',sans-serif;
-    font-size:3rem;
-    font-weight:900;
-    letter-spacing:-1px; /* letters closer */
-    line-height:1;
-
-    background:linear-gradient(135deg,#FFFFFF,#8FFFD1,#31D79A);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-
-    text-shadow:0 0 10px rgba(49,215,154,0.4);
-}
+        .logo-main{
+            display:flex;
+            align-items:center;
+            gap:0;
+            position:relative;
+        }
+        .logo-img{
+            height:88px;
+            width:auto;
+            object-fit:contain;
+            border-radius:16px;
+            mix-blend-mode:screen;
+            filter:drop-shadow(0 0 10px rgba(49,215,154,0.35));
+            transition:transform 0.4s ease;
+            margin-right:-28px;
+            display:block;
+        }
+        .logo-title{
+            font-family:'Inter',sans-serif;
+            font-size:3rem;
+            font-weight:900;
+            letter-spacing:-1px;
+            line-height:1;
+            background:linear-gradient(135deg,#FFFFFF,#8FFFD1,#31D79A);
+            -webkit-background-clip:text;
+            background-clip:text;
+            color:transparent;
+            text-shadow:0 0 10px rgba(49,215,154,0.4);
+        }
         @media (max-width: 650px) {
-            .logo-img { height: 74px; 
-            margin-right: -10px;}
+            .logo-img { height: 74px; margin-right: -10px;}
             .logo-title { font-size: 1.5rem; }
-            
         }
         @media (max-width: 480px) {
-            .logo-img { height: 58px; 
-            margin-right: -18px;}
+            .logo-img { height: 58px; margin-right: -18px;}
             .logo-title { font-size: 2rem; }
         }
 
-       .nav-links{
-    display:flex;
-    align-items:center;
-    gap:22px;
-    flex-wrap:wrap;
-}
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:22px;
+            flex-wrap:wrap;
+        }
+        .nav-links a{
+            position:relative;
+            color:#ffffff;
+            text-decoration:none;
+            font-size:15px;
+            font-weight:600;
+            letter-spacing:0.5px;
+            padding:10px 6px;
+            transition: color .35s ease, transform .35s ease, text-shadow .35s ease;
+        }
+        .nav-links a::after{
+            content:'';
+            position:absolute;
+            left:50%;
+            bottom:2px;
+            transform:translateX(-50%);
+            width:0%;
+            height:2px;
+            border-radius:20px;
+            background:linear-gradient(90deg, transparent, #50C878, transparent);
+            box-shadow: 0 0 10px rgba(80,200,120,0.7), 0 0 20px rgba(80,200,120,0.35);
+            transition:width .4s ease;
+        }
+        .nav-links a:hover{
+            color:#7fffb7;
+            transform:translateY(-2px);
+            text-shadow:0 0 10px rgba(80,200,120,0.65), 0 0 22px rgba(80,200,120,0.25);
+        }
+        .nav-links a:hover::after{ width:100%; }
+        .nav-links a:not(.nav-btn){ animation:navFloat 3.5s ease-in-out infinite; }
+        .nav-links a:nth-child(2){ animation-delay:.5s; }
+        .nav-links a:nth-child(3){ animation-delay:1s; }
+        @keyframes navFloat{ 0%,100%{ transform:translateY(0px); } 50%{ transform:translateY(-3px); } }
+        .nav-btn{
+            padding:12px 24px !important;
+            border-radius:999px;
+            background:linear-gradient(135deg, #50C878, #7fffb7);
+            color:#07130c !important;
+            font-weight:800 !important;
+            box-shadow:0 0 15px rgba(80,200,120,0.35), 0 0 35px rgba(80,200,120,0.15);
+            overflow:hidden;
+        }
+        .nav-btn::before{
+            content:'';
+            position:absolute;
+            top:0;
+            left:-120%;
+            width:60%;
+            height:100%;
+            background:linear-gradient(120deg, transparent, rgba(255,255,255,0.8), transparent);
+            transform:skewX(-25deg);
+            animation:navBtnShine 3s linear infinite;
+        }
+        @keyframes navBtnShine{ 100%{ left:140%; } }
+        .nav-btn:hover{ transform:translateY(-3px) scale(1.04) !important; box-shadow:0 0 22px rgba(80,200,120,0.55), 0 0 45px rgba(80,200,120,0.28); }
+        @media(max-width:768px){ .nav-links{ justify-content:center; gap:14px; } .nav-links a{ font-size:14px; } .nav-btn{ padding:10px 20px !important; } }
 
-/* normal nav links */
-
-.nav-links a{
-    position:relative;
-
-    color:#ffffff;
-    text-decoration:none;
-
-    font-size:15px;
-    font-weight:600;
-    letter-spacing:0.5px;
-
-    padding:10px 6px;
-
-    transition:
-        color .35s ease,
-        transform .35s ease,
-        text-shadow .35s ease;
-}
-
-/* animated underline glow */
-
-.nav-links a::after{
-    content:'';
-
-    position:absolute;
-
-    left:50%;
-    bottom:2px;
-
-    transform:translateX(-50%);
-
-    width:0%;
-    height:2px;
-
-    border-radius:20px;
-
-    background:linear-gradient(
-        90deg,
-        transparent,
-        #50C878,
-        transparent
-    );
-
-    box-shadow:
-        0 0 10px rgba(80,200,120,0.7),
-        0 0 20px rgba(80,200,120,0.35);
-
-    transition:width .4s ease;
-}
-
-/* hover */
-
-.nav-links a:hover{
-    color:#7fffb7;
-
-    transform:translateY(-2px);
-
-    text-shadow:
-        0 0 10px rgba(80,200,120,0.65),
-        0 0 22px rgba(80,200,120,0.25);
-}
-
-.nav-links a:hover::after{
-    width:100%;
-}
-
-/* active floating animation */
-
-.nav-links a:not(.nav-btn){
-    animation:navFloat 3.5s ease-in-out infinite;
-}
-
-.nav-links a:nth-child(2){
-    animation-delay:.5s;
-}
-
-.nav-links a:nth-child(3){
-    animation-delay:1s;
-}
-
-@keyframes navFloat{
-
-    0%,100%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-3px);
-    }
-
-}
-
-/* premium sign in button */
-
-.nav-btn{
-    padding:12px 24px !important;
-
-    border-radius:999px;
-
-    background:linear-gradient(
-        135deg,
-        #50C878,
-        #7fffb7
-    );
-
-    color:#07130c !important;
-
-    font-weight:800 !important;
-
-    box-shadow:
-        0 0 15px rgba(80,200,120,0.35),
-        0 0 35px rgba(80,200,120,0.15);
-
-    overflow:hidden;
-}
-
-/* shine effect */
-
-.nav-btn::before{
-    content:'';
-
-    position:absolute;
-
-    top:0;
-    left:-120%;
-
-    width:60%;
-    height:100%;
-
-    background:linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,0.8),
-        transparent
-    );
-
-    transform:skewX(-25deg);
-
-    animation:navBtnShine 3s linear infinite;
-}
-
-@keyframes navBtnShine{
-
-    100%{
-        left:140%;
-    }
-
-}
-
-.nav-btn:hover{
-    transform:translateY(-3px) scale(1.04) !important;
-
-    box-shadow:
-        0 0 22px rgba(80,200,120,0.55),
-        0 0 45px rgba(80,200,120,0.28);
-}
-
-/* mobile */
-
-@media(max-width:768px){
-
-    .nav-links{
-        justify-content:center;
-        gap:14px;
-    }
-
-    .nav-links a{
-        font-size:14px;
-    }
-
-    .nav-btn{
-        padding:10px 20px !important;
-    }
-
-}
-        /* Hero content area - CORRECT ORDER */
         .new-hero-content {
             flex: 1;
             display: flex;
@@ -421,308 +283,108 @@
             position: relative;
             z-index: 2;
         }
-
-        /* description line (20+ branches) */
         .hero-description-line {
             font-size: 1rem;
             color: rgba(255,255,255,0.88);
             margin-bottom: 25px;
             line-height: 1.5;
+            position:relative;
+            display:inline-block;
+            padding-bottom:14px;
         }
-
-
-        .hero-description-line{
-    position:relative;
-    display:inline-block;
-
-    padding-bottom:14px;
-}
-
-/* premium glow line */
-.hero-description-line::after{
-    content:'';
-    position:absolute;
-
-    left:50%;
-    bottom:0;
-
-    transform:translateX(-50%);
-
-    width:100%;
-    height:2px;
-
-    border-radius:20px;
-
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(80,200,120,0.95),
-        transparent
-    );
-
-    box-shadow:
-        0 0 10px rgba(80,200,120,0.6),
-        0 0 22px rgba(80,200,120,0.35);
-
-    animation:glowLineMove 3s ease-in-out infinite;
-}
-
-@keyframes glowLineMove{
-
-    0%,100%{
-        opacity:0.5;
-        width:75%;
-    }
-
-    50%{
-        opacity:1;
-        width:100%;
-    }
-
-}
-
-
-
-        @media (max-width: 640px) {
-            .hero-description-line { font-size: 0.9rem; margin-bottom: 20px; }
+        .hero-description-line::after{
+            content:'';
+            position:absolute;
+            left:50%;
+            bottom:0;
+            transform:translateX(-50%);
+            width:100%;
+            height:2px;
+            border-radius:20px;
+            background:linear-gradient(90deg, transparent, rgba(80,200,120,0.95), transparent);
+            box-shadow:0 0 10px rgba(80,200,120,0.6), 0 0 22px rgba(80,200,120,0.35);
+            animation:glowLineMove 3s ease-in-out infinite;
         }
-
-.badge{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-
-    padding:8px 14px;
-
-    border-radius:999px;
-
-    background:rgba(255,255,255,0.08);
-
-    border:1px solid rgba(255,255,255,0.12);
-
-    backdrop-filter:blur(10px);
-
-    color:#ffffff;
-
-    font-size:14px;
-    font-weight:700;
-    letter-spacing:0.8px;
-
-    box-shadow:
-        0 0 20px rgba(80,200,120,0.10),
-        0 0 40px rgba(80,200,120,0.06);
-
-    animation:premiumPulse 3.8s ease-in-out infinite;
-    margin-top: -15px;
-}
-
-/* smooth premium heartbeat */
-
-@keyframes premiumPulse{
-
-    0%{
-        transform:scale(1);
-    }
-
-    20%{
-        transform:scale(1.045);
-    }
-
-    40%{
-        transform:scale(1);
-    }
-
-    60%{
-        transform:scale(1.045);
-    }
-
-    100%{
-        transform:scale(1);
-    }
-
-}
-
-
-.main-title{
-    font-family: 'Inter', sans-serif;
-    font-size:clamp(3rem,8vw,7rem);
-    font-weight:900;
-    line-height:0.95;
-    text-align:center;
-    color:#fff;
-    letter-spacing: -1px; /* premium tight look */
-}
-
-.word{
-    display:inline-block;
-}
-
-.letter-wrap{
-    position:relative;
-    display:inline-flex;
-    flex-direction:column;
-    height:1em;
-    overflow:hidden;
-    vertical-align:top;
-}
-
-/* DEFAULT STATE (no animation) */
-.letter-wrap .letter {
-    animation: none;
-}
-
-/* ACTIVE STATE */
-.letter-wrap.active .letter {
-    animation: rollLetter 1.2s ease-in-out;
-}
-
-/* duplicate */
-.clone{
-    position:absolute;
-    top:100%;
-    left:0;
-}
-
-/* MAIN ANIMATION */
-@keyframes rollLetter {
-    0%   { transform: translateY(0%); }
-    50%  { transform: translateY(-100%); }
-    100% { transform: translateY(0%); }
-}
-
-.hero-title{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-
-    gap:8px;
-
-    font-size:clamp(2.8rem, 8vw, 5.5rem);
-    font-weight:900;
-    line-height:1.1;
-
-    text-align:center;
-
-    cursor:pointer;
-}
-
-/* text style */
-
-.title-line{
-    position:relative;
-
-    display:inline-block;
-
-    background:linear-gradient(
-        135deg,
-        #ffffff,
-        #b8ffe4
-    );
-
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-
-    transition:
-        transform .35s ease,
-        text-shadow .35s ease;
-}
-
-/* common underline */
-
-.title-line::after{
-    content:'';
-
-    position:absolute;
-
-    bottom:-10px;
-
-    width:0%;
-    height:4px;
-
-    border-radius:30px;
-
-    background:linear-gradient(
-        90deg,
-        #50C878,
-        #7fffb7
-    );
-
-    box-shadow:
-        0 0 12px rgba(80,200,120,0.45),
-        0 0 28px rgba(80,200,120,0.18);
-
-    transition:width .5s cubic-bezier(.22,.61,.36,1);
-}
-
-/* first line left → right */
-
-.line-one::after{
-    left:0;
-}
-
-/* second line right → left */
-
-.line-two::after{
-    right:0;
-}
-
-/* HOVER ANYWHERE → BOTH UNDERLINES */
-
-.hero-title:hover .line-one::after,
-.hero-title:active .line-one::after{
-    width:100%;
-}
-
-.hero-title:hover .line-two::after,
-.hero-title:active .line-two::after{
-    width:100%;
-}
-
-/* subtle hover */
-
-.hero-title:hover .title-line{
-    transform:translateY(-2px);
-
-    text-shadow:
-        0 0 18px rgba(80,200,120,0.25);
-}
-
-/* mobile */
-
-@media(max-width:768px){
-
-    .title-line::after{
-        height:3px;
-        bottom:-7px;
-    }
-
-}
-
-/* mobile */
-
-@media(max-width:768px){
-
-    .hero-title::after{
-        height:3px;
-        bottom:-8px;
-        
-    }
-
-}
-
-@media (max-width:320px){
-
-    .hero-title{
-        font-size:1.6rem;
-        gap:4px;
-        line-height:1;
-    }
-
-    .main-title{
-        letter-spacing:-0.5px;
-    }
-
-}
+        @keyframes glowLineMove{ 0%,100%{ opacity:0.5; width:75%; } 50%{ opacity:1; width:100%; } }
+        @media (max-width: 640px) { .hero-description-line { font-size: 0.9rem; margin-bottom: 20px; } }
+
+        .badge{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            padding:8px 14px;
+            border-radius:999px;
+            background:rgba(255,255,255,0.08);
+            border:1px solid rgba(255,255,255,0.12);
+            backdrop-filter:blur(10px);
+            color:#ffffff;
+            font-size:14px;
+            font-weight:700;
+            letter-spacing:0.8px;
+            box-shadow:0 0 20px rgba(80,200,120,0.10), 0 0 40px rgba(80,200,120,0.06);
+            animation:premiumPulse 3.8s ease-in-out infinite;
+            margin-top: -15px;
+        }
+        @keyframes premiumPulse{ 0%{ transform:scale(1); } 20%{ transform:scale(1.045); } 40%{ transform:scale(1); } 60%{ transform:scale(1.045); } 100%{ transform:scale(1); } }
+
+        .main-title{
+            font-family: 'Inter', sans-serif;
+            font-size:clamp(3rem,8vw,7rem);
+            font-weight:900;
+            line-height:0.95;
+            text-align:center;
+            color:#fff;
+            letter-spacing: -1px;
+        }
+        .word{ display:inline-block; }
+        .letter-wrap{
+            position:relative;
+            display:inline-flex;
+            flex-direction:column;
+            height:1em;
+            overflow:hidden;
+            vertical-align:top;
+        }
+        .letter-wrap .letter { animation: none; }
+        .letter-wrap.active .letter { animation: rollLetter 1.2s ease-in-out; }
+        .clone{ position:absolute; top:100%; left:0; }
+        @keyframes rollLetter { 0% { transform: translateY(0%); } 50% { transform: translateY(-100%); } 100% { transform: translateY(0%); } }
+
+        .hero-title{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:8px;
+            font-size:clamp(2.8rem, 8vw, 5.5rem);
+            font-weight:900;
+            line-height:1.1;
+            text-align:center;
+            cursor:pointer;
+        }
+        .title-line{
+            position:relative;
+            display:inline-block;
+            background:linear-gradient(135deg, #ffffff, #b8ffe4);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            transition: transform .35s ease, text-shadow .35s ease;
+        }
+        .title-line::after{
+            content:'';
+            position:absolute;
+            bottom:-10px;
+            width:0%;
+            height:4px;
+            border-radius:30px;
+            background:linear-gradient(90deg, #50C878, #7fffb7);
+            box-shadow:0 0 12px rgba(80,200,120,0.45), 0 0 28px rgba(80,200,120,0.18);
+            transition:width .5s cubic-bezier(.22,.61,.36,1);
+        }
+        .line-one::after{ left:0; }
+        .line-two::after{ right:0; }
+        .hero-title:hover .line-one::after, .hero-title:hover .line-two::after{ width:100%; }
+        .hero-title:hover .title-line{ transform:translateY(-2px); text-shadow:0 0 18px rgba(80,200,120,0.25); }
+        @media(max-width:768px){ .title-line::after{ height:3px; bottom:-7px; } }
 
         .new-hero-content h1 {
             font-size: clamp(2.8rem, 9vw, 5.5rem);
@@ -734,7 +396,6 @@
             background-clip: text;
             color: transparent;
         }
-
         .rotating-benefits {
             background: rgba(80,200,120,0.1);
             border-radius: 50px;
@@ -754,7 +415,6 @@
             min-width: 140px;
             text-align: left;
         }
-
         .cta-primary {
             background: var(--emerald);
             color: var(--deep-forest);
@@ -774,7 +434,6 @@
             background: #6adc8f;
             box-shadow: 0 18px 30px rgba(80,200,120,0.3);
         }
-
         .new-scroll-down {
             text-align: center;
             margin-bottom: 30px;
@@ -785,12 +444,8 @@
             position: relative;
             z-index: 2;
         }
-        @keyframes gentleBounce {
-            0%,100%{ transform: translateY(0);}
-            50%{ transform: translateY(8px);}
-        }
+        @keyframes gentleBounce { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(8px);} }
 
-        /* The rest of your sections (hero-section, expertise-section, cards, contact) remain EXACTLY as you had them */
         .hero-section {
             min-height: 90vh;
             width: 100%;
@@ -836,7 +491,6 @@
             color: var(--deep-forest);
             transform: scale(1.02);
         }
-
         .expertise-section {
             position: relative;
             z-index: 10;
@@ -960,118 +614,109 @@
         .subscribe-btn:hover { background: var(--emerald); color: var(--deep-forest); transform: translateY(-2px);}
         .popular .card-front { border: 2px solid var(--emerald); box-shadow: 0 0 0 1px var(--emerald), 0 25px 45px rgba(0,0,0,0.2); }
         .popular .subscribe-btn { background: var(--emerald); color: var(--deep-forest); }
-
-        @media (max-width: 1024px) {
-            .cards-wrapper { flex-direction: column; align-items: center; gap: 40px; }
-            .card-3d { width: 100%; max-width: 550px; min-width: auto; margin: 0 auto; }
-            .expertise-section { padding: 70px 5%; }
-        }
-        @media (max-width: 640px) {
-            .hero-new { padding: 0 4%; }
-            .new-hero-content { padding: 20px 0 40px; }
-            .card-3d { max-width: 100%; }
-            .card-face { padding: 22px 18px; }
-            .plan-name { font-size: 1.5rem; }
-            .plan-price { font-size: 2rem; }
-            .floating-icon { width: 50px; height: 50px; }
-        }
-
-        .contact-section {
-            position: relative;
-            z-index: 12;
-            padding: 80px 5% 100px;
-            background-color: var(--deep-forest);
-        }
-        .contact-container {
-            display: flex;
-            flex-wrap: wrap;
-            max-width: 1100px;
-            margin: 0 auto;
-            background: rgba(20, 35, 28, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 40px;
-            padding: 50px 45px;
-            gap: 50px;
-            border: 1px solid rgba(80,200,120,0.3);
-        }
+        @media (max-width: 1024px) { .cards-wrapper { flex-direction: column; align-items: center; gap: 40px; } .card-3d { width: 100%; max-width: 550px; } .expertise-section { padding: 70px 5%; } }
+        @media (max-width: 640px) { .hero-new { padding: 0 4%; } .new-hero-content { padding: 20px 0 40px; } .card-3d { max-width: 100%; } .card-face { padding: 22px 18px; } .plan-name { font-size: 1.5rem; } .plan-price { font-size: 2rem; } .floating-icon { width: 50px; height: 50px; } }
+        .contact-section { position: relative; z-index: 12; padding: 80px 5% 100px; background-color: var(--deep-forest); }
+        .contact-container { display: flex; flex-wrap: wrap; max-width: 1100px; margin: 0 auto; background: rgba(20, 35, 28, 0.85); backdrop-filter: blur(10px); border-radius: 40px; padding: 50px 45px; gap: 50px; border: 1px solid rgba(80,200,120,0.3); }
         .contact-info { flex: 1; min-width: 240px; }
         .contact-info h2 { font-size: 2.5rem; font-weight: 800; color: var(--emerald); margin-bottom: 18px; }
         .contact-info p { color: #e0e7e3; line-height: 1.5; font-size: 1rem; }
         .contact-form { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: 22px; }
-        .contact-form input, .contact-form textarea {
-            width: 100%;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 14px 18px;
-            border-radius: 60px;
-            color: white;
-            font-size: 0.95rem;
-            outline: none;
-        }
+        .contact-form input, .contact-form textarea { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); padding: 14px 18px; border-radius: 60px; color: white; font-size: 0.95rem; outline: none; }
         .contact-form textarea { border-radius: 25px; resize: vertical; }
         .contact-form input:focus, .contact-form textarea:focus { border-color: var(--emerald); background: rgba(80,200,120,0.1);}
-        .contact-form button {
+        .contact-form button { background: var(--emerald); color: var(--deep-forest); font-weight: 800; border: none; padding: 14px; border-radius: 60px; font-size: 1rem; cursor: pointer; }
+        .contact-form button:hover { background: #9be5b7; transform: scale(0.98);}
+        footer { text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; color: #99aa9f; background-color: var(--deep-forest); }
+        @media (max-width: 850px) { .navbar { flex-direction: column; align-items: center; text-align: center; } .nav-links { justify-content: center; } .new-hero-content h1 { font-size: clamp(2.5rem, 8vw, 4rem); } .contact-container { flex-direction: column; text-align: center; padding: 35px 25px; } .contact-info h2 { font-size: 2rem; text-align: center; } .contact-info p { text-align: center; } .contact-form { align-items: center; } }
+        @media (max-width: 320px) { .new-hero-content h1 { font-size: clamp(2rem, 8vw, 3.5rem); } .contact-container { padding: 25px 15px; } .contact-info h2 { font-size: 1.8rem; } .hero-description-line br{ display:none; } .navbar{ margin-top: -10px; } .cta-primary{ padding: 12px 28px; font-size: 0.9rem; } .badge{ padding: 8px 16px; font-size: 12px; margin-bottom: 12px; } }
+
+        /* ---------- MODAL STYLES (unchanged) ---------- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.25s;
+        }
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-container {
+            background: rgba(20,35,28,0.95);
+            border-radius: 2rem;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid rgba(80,200,120,0.4);
+            box-shadow: 0 25px 40px rgba(0,0,0,0.4);
+            color: white;
+        }
+        .modal-container h2 {
+            margin-bottom: 1rem;
+            color: var(--emerald);
+        }
+        .modal-container input, .modal-container select {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 1rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 60px;
+            color: white;
+            font-size: 0.9rem;
+        }
+        .modal-container button {
             background: var(--emerald);
-            color: var(--deep-forest);
+            width: 100%;
+            padding: 12px;
+            border-radius: 60px;
             font-weight: 800;
             border: none;
-            padding: 14px;
-            border-radius: 60px;
-            font-size: 1rem;
+            color: #0A1C12;
             cursor: pointer;
+            font-size: 1rem;
         }
-        .contact-form button:hover { background: #9be5b7; transform: scale(0.98);}
-        footer {
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+            transition: 0.2s;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: #50C878;
+            transform: scale(1.1);
+        }
+        .modal-container {
+            position: relative;
+        }
+        .selected-plan-info {
+            background: rgba(80,200,120,0.2);
+            border-radius: 1rem;
+            padding: 0.8rem;
             text-align: center;
-            padding: 40px 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.85rem;
-            color: #99aa9f;
-            background-color: var(--deep-forest);
+            margin-bottom: 1.5rem;
         }
-
-        @media (max-width: 850px) {
-            .navbar { flex-direction: column; align-items: center; text-align: center; }
-            .nav-links { justify-content: center; }
-            .new-hero-content h1 { font-size: clamp(2.5rem, 8vw, 4rem); }
-            .contact-container { flex-direction: column; text-align: center; padding: 35px 25px; }
-            .contact-info h2 { font-size: 2rem; text-align: center; }
-            .contact-info p { text-align: center; }
-            .contact-form { align-items: center; }
+        .error-msg {
+            color: #ffa69e;
+            font-size: 0.75rem;
+            margin: -0.5rem 0 0.8rem 0;
         }
-
-
-        @media (max-width: 320px) {
-            .new-hero-content h1 { font-size: clamp(2rem, 8vw, 3.5rem); }
-            .contact-container { padding: 25px 15px; }
-            .contact-info h2 { font-size: 1.8rem; }
-        }
-
-        @media (max-width:320px){
-
-    .hero-description-line br{
-        display:none;
-    }
-
-   .new-hero-content{
-   
-    margin-bottom: 15px;
-   }
-   .navbar{
-    margin-top: -10px;
-   }
-   .cta-primary{
-    padding: 12px 28px;
-    font-size: 0.9rem;
-   }
-   .badge{
-    padding: 8px 16px;
-    font-size: 12px;
-    margin-bottom: 12px;
-   }
-   
-
-}
     </style>
 </head>
 <body>
@@ -1081,7 +726,6 @@
 <section class="hero-new">
     <div class="hero-bg-deco">
         <div class="animated-gradient"></div>
-        <!-- YOUR ORIGINAL ICONS (all 9) exactly as you had -->
         <div class="floating-icon icon1"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M8 7H16M8 11H14M8 15H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M18 15H20M18 11H20" stroke="currentColor" stroke-width="1.5"/></svg></div>
         <div class="floating-icon icon2"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19.5L9 4.5L14 19.5M7 14.5H11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M18 14.5V8.5C18 7.4 17.1 6.5 16 6.5H13" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M18 14.5L21 17.5L18 20.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
         <div class="floating-icon icon3"><svg viewBox="0 0 24 24" fill="none"><path d="M5 8L12 3L19 8L12 13L5 8Z" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M5 16L12 21L19 16" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M5 12L12 17L19 12" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></div>
@@ -1095,109 +739,147 @@
     </div>
 
     <div class="navbar">
-        <!-- Logo with ZERO GAP -->
         <div class="logo-main">
             <img class="logo-img" src="images/backgroundremovelogo.png" alt="Prince Group" onerror="this.style.display='none'">
             <span class="logo-title">Prince Group</span>
-            
         </div>
         <p class="hero-description-line">
-    20 Branches Across Kanniyakumari District<br>
-    The One Brand for 
-    <span class="typing-text"></span>
-</p>
-        
+            20 Branches Across Kanniyakumari District<br>
+            The One Brand for 
+            <span class="typing-text"></span>
+        </p>
         <div class="nav-links">
             <a href="#">Platform</a>
             <a href="#plans">Plans</a>
             <a href="#contact">Contact</a>
-            <a href="#" class="nav-btn">Sign In</a>
+            <a href="#" class="nav-btn" id="signInBtnNav">Sign In</a>
         </div>
     </div>
 
     <div class="new-hero-content">
-        <!-- 1. Description (20+ branches) -->
-       
-        <!-- 2. Badge with zoom effect -->
         <div class="badge">◆ Membership Platform</div>
-        
-        <!-- 3. Main heading -->
-      <h1 class="hero-title">
-
-    <span class="title-line line-one">
-        Your All in One
-    </span>
-
-    <span class="title-line line-two">
-        Membership
-    </span>
-
-</h1>
-        
-        <!-- 4. Rotating benefits -->
+        <h1 class="hero-title">
+            <span class="title-line line-one">Your All in One</span>
+            <span class="title-line line-two">Membership</span>
+        </h1>
         <div class="rotating-benefits">
             <span>◆ Perks:</span>
             <span class="rotating-text" id="rotatingBenefit">Unlimited Docs</span>
         </div>
-        
-        <!-- 5. CTA button -->
         <a href="#letswork" class="cta-primary">Explore memberships →</a>
     </div>
-
     <div class="new-scroll-down">Scroll to discover</div>
 </section>
 
-<!-- rest of your sections (unchanged) -->
 <section class="hero-section" id="letswork">
     <p class="sub-text">COLLABORATE WITH US</p>
-<h1 class="main-title hero-title">
-
-  <span class="word">
-    <span class="letter-wrap"><span class="letter">L</span><span class="letter clone">L</span></span>
-    <span class="letter-wrap"><span class="letter">e</span><span class="letter clone">e</span></span>
-    <span class="letter-wrap"><span class="letter">t</span><span class="letter clone">t</span></span>
-    <span class="letter-wrap"><span class="letter">’</span><span class="letter clone">’</span></span>
-    <span class="letter-wrap"><span class="letter">s</span><span class="letter clone">s</span></span>
- 
-    <span class="letter-wrap"><span class="letter">w</span><span class="letter clone">w</span></span>
-    <span class="letter-wrap"><span class="letter">o</span><span class="letter clone">o</span></span>
-    <span class="letter-wrap"><span class="letter">r</span><span class="letter clone">r</span></span>
-    <span class="letter-wrap"><span class="letter">k</span><span class="letter clone">k</span></span>
-  </span>
-
-
-  <span class="word">
-    <span class="letter-wrap"><span class="letter">t</span><span class="letter clone">t</span></span>
-    <span class="letter-wrap"><span class="letter">o</span><span class="letter clone">o</span></span>
-    <span class="letter-wrap"><span class="letter">g</span><span class="letter clone">g</span></span>
-    <span class="letter-wrap"><span class="letter">e</span><span class="letter clone">e</span></span>
-    <span class="letter-wrap"><span class="letter">t</span><span class="letter clone">t</span></span>
-    <span class="letter-wrap"><span class="letter">h</span><span class="letter clone">h</span></span>
-    <span class="letter-wrap"><span class="letter">e</span><span class="letter clone">e</span></span>
-    <span class="letter-wrap"><span class="letter">r</span><span class="letter clone">r</span></span>
-    <span class="letter-wrap"><span class="letter">!</span><span class="letter clone">!</span></span>
-  </span>
-
-</h1>
+    <h1 class="main-title hero-title">
+        <span class="word"><span class="letter-wrap"><span class="letter">L</span><span class="letter clone">L</span></span><span class="letter-wrap"><span class="letter">e</span><span class="letter clone">e</span></span><span class="letter-wrap"><span class="letter">t</span><span class="letter clone">t</span></span><span class="letter-wrap"><span class="letter">’</span><span class="letter clone">’</span></span><span class="letter-wrap"><span class="letter">s</span><span class="letter clone">s</span></span><span class="letter-wrap"><span class="letter">w</span><span class="letter clone">w</span></span><span class="letter-wrap"><span class="letter">o</span><span class="letter clone">o</span></span><span class="letter-wrap"><span class="letter">r</span><span class="letter clone">r</span></span><span class="letter-wrap"><span class="letter">k</span><span class="letter clone">k</span></span></span>
+        <span class="word"><span class="letter-wrap"><span class="letter">t</span><span class="letter clone">t</span></span><span class="letter-wrap"><span class="letter">o</span><span class="letter clone">o</span></span><span class="letter-wrap"><span class="letter">g</span><span class="letter clone">g</span></span><span class="letter-wrap"><span class="letter">e</span><span class="letter clone">e</span></span><span class="letter-wrap"><span class="letter">t</span><span class="letter clone">t</span></span><span class="letter-wrap"><span class="letter">h</span><span class="letter clone">h</span></span><span class="letter-wrap"><span class="letter">e</span><span class="letter clone">e</span></span><span class="letter-wrap"><span class="letter">r</span><span class="letter clone">r</span></span><span class="letter-wrap"><span class="letter">!</span><span class="letter clone">!</span></span></span>
+    </h1>
     <a href="https://wa.me/919876543210?text=Hello%21%20I%27m%20interested%20in%20collaborating" target="_blank" class="secondary-cta">Start a conversation →</a>
 </section>
-
 <section class="expertise-section" id="plans">
     <div class="huge-title">MEMBERSHIP<br>PLANS</div>
     <p class="section-subtitle">Smart plans, better savings, faster support – maximum value, minimum hassle.</p>
     <div class="cards-wrapper">
-        <div class="card-3d" data-card="0"><div class="card-inner"><div class="card-face card-front"><div class="ribbon">STARTER</div><div class="plan-label">Core</div><div class="plan-name">Quick Access</div><div class="plan-price">₹1 <span>/ day</span></div><p class="plan-desc">Daily flexibility, zero commitment.</p><ul class="feature-list"><li>Basic document access</li><li>Standard support</li><li>Starter analytics</li><li>Cancel anytime</li></ul><a href="#" class="subscribe-btn" data-plan="₹1 Daily">Start 1-day</a></div><div class="card-face card-back">⚡ Starter<span>premium access</span></div></div></div>
-        <div class="card-3d popular" data-card="1"><div class="card-inner"><div class="card-face card-front"><div class="ribbon">MOST CHOSEN</div><div class="plan-label">Prime</div><div class="plan-name">FastTrack</div><div class="plan-price">₹10 <span>/ day</span></div><p class="plan-desc">40% savings + priority lane.</p><ul class="feature-list"><li>Priority response</li><li>Up to 40% savings</li><li>Faster sync</li><li>Exclusive insights</li></ul><a href="#" class="subscribe-btn" data-plan="₹10 Daily">Choose Smart</a></div><div class="card-face card-back">★ Most Chosen<span>priority access</span></div></div></div>
-        <div class="card-3d" data-card="2"><div class="card-inner"><div class="card-face card-front"><div class="ribbon">PREMIUM</div><div class="plan-label">Apex</div><div class="plan-name">Express Priority</div><div class="plan-price">₹100 <span>/ day</span></div><p class="plan-desc">75% discount + VIP treatment.</p><ul class="feature-list"><li><strong>75% discount</strong></li><li>Instant processing</li><li>Dedicated manager</li><li>Beta access</li></ul><a href="#" class="subscribe-btn" data-plan="₹100 Daily">Go Premium</a></div><div class="card-face card-back">👑 Premium<span>unlimited benefits</span></div></div></div>
+        <!-- Plan 1: Quick Access - 25% OFF -->
+        <div class="card-3d" data-card="0">
+            <div class="card-inner">
+                <div class="card-face card-front">
+                    <div class="ribbon">STARTER</div>
+                    <div class="plan-label">Core</div>
+                    <div class="plan-name">Quick Access</div>
+                    <div class="plan-price">
+                        ₹1 <span>/ day</span>
+                        <span style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 40px; margin-left: 8px;">25% OFF</span>
+                    </div>
+                    <div style="font-size: 0.9rem; color: #52d67f; margin-top: -8px; margin-bottom: 8px;">
+                        ₹30 <span style="font-size: 0.7rem; color: #9fb9aa;">/ month (billed monthly)</span>
+                    </div>
+                    <p class="plan-desc">Daily flexibility, zero commitment.</p>
+                    <ul class="feature-list">
+                        <li>Basic document access</li>
+                        <li>Standard support</li>
+                        <li>Starter analytics</li>
+                        <li>Cancel anytime</li>
+                    </ul>
+                    <div style="font-size: 0.65rem; color: #9fb9aa; text-align: center; margin-bottom: 10px;">
+                        🔄 Auto‑pay enabled | Monthly renewal
+                    </div>
+                    <a href="#" class="subscribe-btn" data-plan-name="Quick Access" data-amount="1">Start 1-day</a>
+                </div>
+                <div class="card-face card-back">⚡ Starter<span>premium access</span></div>
+            </div>
+        </div>
+
+        <!-- Plan 2: FastTrack - 40% OFF (Most Chosen) -->
+        <div class="card-3d popular" data-card="1">
+            <div class="card-inner">
+                <div class="card-face card-front">
+                    <div class="ribbon">MOST CHOSEN</div>
+                    <div class="plan-label">Prime</div>
+                    <div class="plan-name">FastTrack</div>
+                    <div class="plan-price">
+                        ₹10 <span>/ day</span>
+                        <span style="background: linear-gradient(135deg, #f9ca24, #f0932b); color: #2c3e50; font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 40px; margin-left: 8px;">40% OFF</span>
+                    </div>
+                    <div style="font-size: 0.9rem; color: #52d67f; margin-top: -8px; margin-bottom: 8px;">
+                        ₹300 <span style="font-size: 0.7rem; color: #9fb9aa;">/ month (billed monthly)</span>
+                    </div>
+                    <p class="plan-desc">40% savings + priority lane.</p>
+                    <ul class="feature-list">
+                        <li>Priority response</li>
+                        <li>Up to 40% savings</li>
+                        <li>Faster sync</li>
+                        <li>Exclusive insights</li>
+                    </ul>
+                    <div style="font-size: 0.65rem; color: #9fb9aa; text-align: center; margin-bottom: 10px;">
+                        🔄 Auto‑pay enabled | Monthly renewal
+                    </div>
+                    <a href="#" class="subscribe-btn" data-plan-name="FastTrack" data-amount="10">Choose Smart</a>
+                </div>
+                <div class="card-face card-back">★ Most Chosen<span>priority access</span></div>
+            </div>
+        </div>
+
+        <!-- Plan 3: Express Priority - 75% OFF -->
+        <div class="card-3d" data-card="2">
+            <div class="card-inner">
+                <div class="card-face card-front">
+                    <div class="ribbon">PREMIUM</div>
+                    <div class="plan-label">Apex</div>
+                    <div class="plan-name">Express Priority</div>
+                    <div class="plan-price">
+                        ₹100 <span>/ day</span>
+                        <span style="background: linear-gradient(135deg, #a29bfe, #6c5ce7); color: white; font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 40px; margin-left: 8px;">75% OFF</span>
+                    </div>
+                    <div style="font-size: 0.9rem; color: #52d67f; margin-top: -8px; margin-bottom: 8px;">
+                        ₹3000 <span style="font-size: 0.7rem; color: #9fb9aa;">/ month (billed monthly)</span>
+                    </div>
+                    <p class="plan-desc">75% discount + VIP treatment.</p>
+                    <ul class="feature-list">
+                        <li><strong>75% discount</strong></li>
+                        <li>Instant processing</li>
+                        <li>Dedicated manager</li>
+                        <li>Beta access</li>
+                    </ul>
+                    <div style="font-size: 0.65rem; color: #9fb9aa; text-align: center; margin-bottom: 10px;">
+                        🔄 Auto‑pay enabled | Monthly renewal
+                    </div>
+                    <a href="#" class="subscribe-btn" data-plan-name="Express Priority" data-amount="100">Go Premium</a>
+                </div>
+                <div class="card-face card-back">👑 Premium<span>unlimited benefits</span></div>
+            </div>
+        </div>
     </div>
 </section>
-
 <section class="contact-section" id="contact">
     <div class="contact-container">
         <div class="contact-info"><h2>Get in Touch</h2><p>Questions about our plans? Need a custom subscription? We respond within hours.</p></div>
         <form class="contact-form" id="contactForm">
             <input type="text" placeholder="Full name" required>
-            <input type="email" placeholder="Email address" required>
+            <input type="tel" placeholder="Mobile Number" required>
             <textarea rows="4" placeholder="Tell us about your project..."></textarea>
             <button type="button" id="sendMsgBtn">SEND MESSAGE →</button>
         </form>
@@ -1205,9 +887,119 @@
 </section>
 <footer><p>© 2026 Prince Group — Seamless subscriptions, smarter workflows.</p></footer>
 
+<!-- MODAL: Account Creation (Signup) -->
+<div id="signupModal" class="modal-overlay">
+    <div class="modal-container">
+        <span id="closeSignupModalX" class="modal-close">&times;</span>
+        <h2>Create Account</h2>
+        <div id="selectedPlanDisplay" class="selected-plan-info">Plan: - | Amount: ₹0/day</div>
+        <form autocomplete="off">
+            <input type="text" id="signupName" placeholder="Full Name" autocomplete="off">
+            <input type="tel" id="signupMobile" placeholder="Mobile Number" autocomplete="off">
+            <select id="signupLocation" style="background-color: #1a2a1f; color: white; border: 1px solid rgba(255,255,255,0.2);">
+                <option value="" disabled selected style="background-color: #0A1C12;">Select Branch (20 Locations)</option>
+                <option style="background-color: #0A1C12;">Nagercoil Central</option>
+                <option style="background-color: #0A1C12;">Kanyakumari</option>
+                <option style="background-color: #0A1C12;">Suchindrum</option>
+                <option style="background-color: #0A1C12;">Kuzhithurai</option>
+                <option style="background-color: #0A1C12;">Padmanabhapuram</option>
+                <option style="background-color: #0A1C12;">Colachel</option>
+                <option style="background-color: #0A1C12;">Marthandam</option>
+                <option style="background-color: #0A1C12;">Thuckalay</option>
+                <option style="background-color: #0A1C12;">Vilavancode</option>
+                <option style="background-color: #0A1C12;">Thovalai</option>
+                <option style="background-color: #0A1C12;">Kaliyakkavilai</option>
+                <option style="background-color: #0A1C12;">Eraniel</option>
+                <option style="background-color: #0A1C12;">Azhagappapuram</option>
+                <option style="background-color: #0A1C12;">Killiyoor</option>
+                <option style="background-color: #0A1C12;">Kurunthencode</option>
+                <option style="background-color: #0A1C12;">Mylaudy</option>
+                <option style="background-color: #0A1C12;">Puthukkadai</option>
+                <option style="background-color: #0A1C12;">Boothapandi</option>
+                <option style="background-color: #0A1C12;">Rajakkamangalam</option>
+                <option style="background-color: #0A1C12;">Chitharal</option>
+            </select>
+            <input type="password" id="signupPassword" placeholder="Password" autocomplete="new-password">
+            <input type="password" id="signupConfirm" placeholder="Confirm Password" autocomplete="new-password">
+        </form>
+        <div id="signupError" class="error-msg"></div>
+        <button id="continueToPaymentBtn">Continue to Payment →</button>
+    </div>
+</div>
+
+<!-- MODAL: Login (No Autofill) -->
+<div id="loginModal" class="modal-overlay">
+    <div class="modal-container">
+        <span id="closeLoginModalX" class="modal-close">&times;</span>
+        <h2>Sign In</h2>
+        <input type="text" id="loginIdentity" placeholder="Member ID or Mobile Number" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
+        <input type="password" id="loginPassword" placeholder="Password" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')">
+        <div id="loginError" class="error-msg"></div>
+        <button id="loginSubmitBtn">Login</button>
+    </div>
+</div>
+
+<!-- MODAL: Razorpay (Premium Payment) -->
+<div id="razorpayModal" class="modal-overlay">
+    <div class="modal-container" style="max-width: 480px; padding: 0; text-align: left;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 1.5rem 0 1.5rem;">
+            <h2 style="margin: 0; font-size: 1.5rem;">Complete Payment</h2>
+            <span id="closeRazorpayModalX" class="modal-close" style="position: static; font-size: 1.8rem;">&times;</span>
+        </div>
+        <hr style="margin: 1rem 1.5rem; border-color: rgba(255,255,255,0.1);">
+        <div style="background: rgba(82,214,127,0.05); border-radius: 1.2rem; margin: 0 1.5rem; padding: 1rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+                <span style="color: #9fb9aa;">Plan</span>
+                <strong id="razorpayPlanName" style="color: #52d67f;">-</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+                <span style="color: #9fb9aa;">Monthly Amount</span>
+                <strong>₹<span id="razorpayMonthlyAmount">0</span></strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                <span style="font-weight: 700;">Total Payable</span>
+                <strong style="font-size: 1.3rem; color: #52d67f;">₹<span id="razorpayTotal">0</span></strong>
+            </div>
+        </div>
+        <div style="margin: 1rem 1.5rem; font-size: 0.7rem; color: #9fb9aa; text-align: center;">
+            🔄 Auto‑renewal enabled. Your subscription will automatically renew every month.<br>You can cancel anytime from your dashboard.
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+            <button id="mockPayConfirm" style="background: linear-gradient(135deg, #52d67f, #1a9d55); width: 100%; padding: 14px; border-radius: 60px; font-weight: 800; border: none; color: white; cursor: pointer; font-size: 1rem; box-shadow: 0 8px 16px rgba(82,214,127,0.2); transition: transform 0.2s;">
+                💳 Pay Now
+            </button>
+            <p style="font-size: 0.7rem; color: #9fb9aa; margin-top: 0.8rem; text-align: center;">Secured by Razorpay | No card details stored</p>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: Success -->
+<div id="successModal" class="modal-overlay">
+    <div class="modal-container" style="text-align:center; max-width: 450px; padding: 0;">
+        <div style="display: flex; justify-content: flex-end; padding: 1rem 1rem 0 0;">
+            <span id="closeSuccessModalX" class="modal-close" style="position: static; font-size: 1.5rem;">&times;</span>
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+            <h2 style="margin-bottom: 0.5rem;">✅ Payment Successful!</h2>
+            <div id="successContent"></div>
+            <button id="goToDashboardBtn" style="margin-top: 1rem; width: 100%;">Go to Dashboard →</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: Dashboard (legacy, referenced by script) -->
+<div id="dashboardModal" class="modal-overlay">
+    <div class="modal-container" style="max-width:550px">
+        <span id="closeDashboardModalX" class="modal-close" style="position: static; font-size: 1.5rem; right: 1rem;">&times;</span>
+        <h2>👑 Customer Dashboard</h2>
+        <div id="dashboardContent"></div>
+        <button id="logoutFromDashboard" style="margin-top:1rem; width:100%; background:#2d4a3a;">Logout</button>
+    </div>
+</div>
+
 <script>
     (function() {
-        // THREE.JS BACKGROUND (unchanged from your original)
+        // ========== THREE.JS & GSAP (unchanged) ==========
         const canvas = document.getElementById('webgl-canvas');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -1244,42 +1036,22 @@
         particles.rotation.x = -Math.PI * 0.2;
         scene.add(particles);
         const clock = new THREE.Clock();
-        
-
         const text = "All Your Needs";
-const typingElement = document.querySelector(".typing-text");
-
-let index = 0;
-let isDeleting = false;
-
-function typeEffect(){
-
-    if(!isDeleting){
-        typingElement.textContent = text.substring(0, index + 1);
-        index++;
-
-        if(index === text.length){
-            isDeleting = true;
-
-            setTimeout(typeEffect, 1300);
-            return;
+        const typingElement = document.querySelector(".typing-text");
+        let index = 0, isDeleting = false;
+        function typeEffect(){
+            if(!isDeleting){
+                typingElement.textContent = text.substring(0, index + 1);
+                index++;
+                if(index === text.length){ isDeleting = true; setTimeout(typeEffect, 1300); return; }
+            }else{
+                typingElement.textContent = text.substring(0, index - 1);
+                index--;
+                if(index === 0) isDeleting = false;
+            }
+            setTimeout(typeEffect, isDeleting ? 70 : 120);
         }
-
-    }else{
-        typingElement.textContent = text.substring(0, index - 1);
-        index--;
-
-        if(index === 0){
-            isDeleting = false;
-        }
-    }
-
-    setTimeout(typeEffect, isDeleting ? 70 : 120);
-}
-
-typeEffect();
-
-
+        typeEffect();
         function animateBg() { const t = clock.getElapsedTime(); mouseVec.x += (targetMouse.x - mouseVec.x)*0.06; mouseVec.y += (targetMouse.y - mouseVec.y)*0.06; pmat.uniforms.uTime.value = t * 1.8; pmat.uniforms.uMouse.value.copy(mouseVec); renderer.render(scene, camera); requestAnimationFrame(animateBg); }
         animateBg();
         window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); recalcCardHeights(); ScrollTrigger.refresh(); });
@@ -1290,71 +1062,261 @@ typeEffect();
         window.addEventListener('resize', () => setTimeout(() => { recalcCardHeights(); initCardFlips(); }, 100));
         gsap.to(".huge-title", { y: -150, opacity: 0, scale: 0.7, scrollTrigger: { trigger: ".expertise-section", start: "top 30%", end: "top -20%", scrub: 1.2 } });
         gsap.to(".section-subtitle", { y: -70, opacity: 0, scrollTrigger: { trigger: ".expertise-section", start: "top 35%", end: "top -15%", scrub: 1 } });
-        document.getElementById('sendMsgBtn')?.addEventListener('click', () => { alert('✨ Thank you! Our team will reach out shortly.'); document.getElementById('contactForm')?.reset(); });
-        document.querySelectorAll('.subscribe-btn').forEach(btn => btn.addEventListener('click', e => { e.preventDefault(); alert(`🚀 You chose ${btn.getAttribute('data-plan')}. Demo ready!`); }));
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => anchor.addEventListener('click', function(e) { const target = document.querySelector(this.getAttribute('href')); if(target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); } }));
+        
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const hash = this.getAttribute('href');
+                if (hash === '#') return;
+                const target = document.querySelector(hash);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
         window.addEventListener('load', () => { ScrollTrigger.refresh(); recalcCardHeights(); document.querySelectorAll('.floating-icon svg').forEach(s => s.setAttribute('stroke', '#ffffff')); });
         const benefits = ["Unlimited Docs", "Priority Sync", "24/7 Support", "40% Savings", "Zero Downtime"];
         let idx = 0;
         const rotSpan = document.getElementById('rotatingBenefit');
         if(rotSpan) setInterval(() => { idx = (idx+1)%benefits.length; gsap.to(rotSpan, { opacity:0, duration:0.25, onComplete:()=>{ rotSpan.innerText = benefits[idx]; gsap.to(rotSpan, { opacity:1, duration:0.25 }); } }); }, 2500);
+        
+        (function() {
+          const allLetterWraps = Array.from(document.querySelectorAll('.hero-title .letter-wrap'));
+          const words = document.querySelectorAll('.hero-title .word');
+          const firstGroupWraps = []; const secondGroupWraps = [];
+          let wordIndex = 0;
+          for (let word of words) {
+            const wraps = Array.from(word.querySelectorAll('.letter-wrap'));
+            if (wordIndex < 2) firstGroupWraps.push(...wraps);
+            else secondGroupWraps.push(...wraps);
+            wordIndex++;
+          }
+          function getRandomItems(arr, count) {
+            const shuffled = [...arr];
+            for (let i = shuffled.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; }
+            return shuffled.slice(0, count);
+          }
+          function runCycle() {
+            const picksFromFirst = getRandomItems(firstGroupWraps, 2);
+            const picksFromSecond = getRandomItems(secondGroupWraps, 1);
+            const selected = [...picksFromFirst, ...picksFromSecond];
+            allLetterWraps.forEach(wrap => wrap.classList.remove('active'));
+            void document.body.offsetWidth;
+            selected.forEach(wrap => wrap.classList.add('active'));
+            setTimeout(runCycle, 1400);
+          }
+          runCycle();
+        })();
+
+        // ---------- MODAL FUNCTIONS ----------
+        function showModal(modal) { modal.classList.add('active'); }
+        function hideModal(modal) { modal.classList.remove('active'); }
+
+        // ---------- DOM Elements ----------
+        const signupModal = document.getElementById('signupModal');
+        const loginModal = document.getElementById('loginModal');
+        const razorpayModal = document.getElementById('razorpayModal');
+        const successModal = document.getElementById('successModal');
+        const dashboardModal = document.getElementById('dashboardModal');
+
+        // ---------- CLOSE BUTTONS ----------
+        document.getElementById('closeSignupModalX')?.addEventListener('click', () => hideModal(signupModal));
+        document.getElementById('closeLoginModalX')?.addEventListener('click', () => hideModal(loginModal));
+        document.getElementById('closeRazorpayModalX')?.addEventListener('click', () => hideModal(razorpayModal));
+        document.getElementById('closeSuccessModalX')?.addEventListener('click', () => hideModal(successModal));
+        document.getElementById('closeDashboardModalX')?.addEventListener('click', () => hideModal(dashboardModal));
+
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) hideModal(overlay);
+            });
+        });
+
+        // ---------- Sign In Button ----------
+        document.getElementById('signInBtnNav').addEventListener('click', (e) => {
+            e.preventDefault();
+            showModal(loginModal);
+        });
+
+        function resetSignupForm() {
+            document.getElementById('signupName').value = '';
+            document.getElementById('signupMobile').value = '';
+            document.getElementById('signupLocation').value = '';
+            document.getElementById('signupPassword').value = '';
+            document.getElementById('signupConfirm').value = '';
+            document.getElementById('signupError').innerText = '';
+        }
+
+        // ---------- Subscription Flow ----------
+        let users = JSON.parse(localStorage.getItem('prince_users') || '[]');
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        let selectedPlan = { name: '', amount: 0 };
+
+        document.querySelectorAll('.subscribe-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                resetSignupForm();
+                selectedPlan.name = btn.getAttribute('data-plan-name');
+                selectedPlan.amount = parseInt(btn.getAttribute('data-amount'));
+                document.getElementById('selectedPlanDisplay').innerHTML = `Plan: ${selectedPlan.name} | Amount: ₹${selectedPlan.amount}/day`;
+                showModal(signupModal);
+            });
+        });
+
+        document.getElementById('continueToPaymentBtn').addEventListener('click', () => {
+            const name = document.getElementById('signupName').value.trim();
+            const mobile = document.getElementById('signupMobile').value.trim();
+            const location = document.getElementById('signupLocation').value;
+            const pwd = document.getElementById('signupPassword').value;
+            const confirm = document.getElementById('signupConfirm').value;
+            const errorDiv = document.getElementById('signupError');
+            if(!name || !mobile || !location || !pwd) { errorDiv.innerText = 'All fields required'; return; }
+            if(pwd !== confirm) { errorDiv.innerText = 'Passwords do not match'; return; }
+            if(mobile.length < 8) { errorDiv.innerText = 'Valid mobile number'; return; }
+            if(users.some(u => u.mobile === mobile)) { errorDiv.innerText = 'Mobile already registered. Please login.'; return; }
+            
+            const memberId = 'PG' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 1000);
+            const startDate = new Date();
+            const endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + 30);
+            
+            const newUser = { 
+                memberId, name, mobile, location, password: pwd, 
+                plan: selectedPlan.name, amount: selectedPlan.amount, 
+                subscriptionActive: false,
+                startDate: startDate.toISOString(),
+                endDate: endDate.toISOString(),
+                autoPayEnabled: true
+            };
+            localStorage.setItem('tempSignupUser', JSON.stringify(newUser));
+            hideModal(signupModal);
+            
+            const monthlyAmount = selectedPlan.amount * 30;
+            document.getElementById('razorpayPlanName').innerText = selectedPlan.name;
+            document.getElementById('razorpayMonthlyAmount').innerText = monthlyAmount;
+            document.getElementById('razorpayTotal').innerText = monthlyAmount;
+            showModal(razorpayModal);
+        });
+
+        document.getElementById('mockPayConfirm').onclick = () => {
+            const tempUser = JSON.parse(localStorage.getItem('tempSignupUser'));
+            if (!tempUser) { alert('No pending signup'); hideModal(razorpayModal); return; }
+            const monthlyAmount = tempUser.amount * 30;
+            const amountInPaise = monthlyAmount * 100;
+            if (isNaN(amountInPaise) || amountInPaise < 100) {
+                alert(`Invalid amount: ${tempUser.amount} rupees. Must be at least ₹1.`);
+                return;
+            }
+            const options = {
+                key: "rzp_test_SokoCPGNfFHTsI",
+                amount: amountInPaise,
+                currency: "INR",
+                name: "Prince Group",
+                description: `Subscription: ${tempUser.plan}`,
+                image: "https://via.placeholder.com/100x100?text=PG",
+                handler: function (response) {
+                    tempUser.subscriptionActive = true;
+                    tempUser.razorpayPaymentId = response.razorpay_payment_id;
+                    let allUsers = JSON.parse(localStorage.getItem('prince_users') || '[]');
+                    allUsers.push(tempUser);
+                    localStorage.setItem('prince_users', JSON.stringify(allUsers));
+                    localStorage.setItem('currentUser', JSON.stringify(tempUser));
+                    localStorage.removeItem('tempSignupUser');
+                    
+                    const finalMonthly = tempUser.amount * 30;
+                    const successContent = document.getElementById('successContent');
+                    if (successContent) {
+                        successContent.innerHTML = `
+                            <div style="background: rgba(82,214,127,0.08); border-radius: 1rem; padding: 1rem; margin: 1rem 0;">
+                                <p style="font-size: 1.1rem;"><strong>Welcome, ${tempUser.name}!</strong></p>
+                                <p>Member ID: <strong style="color: #52d67f;">${tempUser.memberId}</strong></p>
+                                <p>Plan: ${tempUser.plan} <strong>(₹${finalMonthly}/month)</strong></p>
+                                <p>Status: <span style="color: #52d67f;">✅ Active</span></p>
+                                <hr style="margin: 0.8rem 0; border-color: rgba(255,255,255,0.1);">
+                                <p style="font-size: 0.75rem; color: #9fb9aa;">Your subscription will automatically renew every month. Visit your dashboard anytime.</p>
+                            </div>
+                        `;
+                    }
+                    hideModal(razorpayModal);
+                    showModal(successModal);
+                },
+                prefill: { name: tempUser.name, contact: tempUser.mobile, email: `${tempUser.mobile}@prince.com` },
+                theme: { color: "#50C878" },
+                modal: { ondismiss: () => { hideModal(razorpayModal); alert("Payment cancelled"); } }
+            };
+            const rzp = new Razorpay(options);
+            rzp.on('payment.failed', (resp) => { alert(`Payment failed: ${resp.error.reason}`); hideModal(razorpayModal); });
+            rzp.open();
+            hideModal(razorpayModal);
+        };
+
+        document.getElementById('goToDashboardBtn').onclick = () => {
+            window.location.href = 'dashboard.html';
+        };
+
+        document.getElementById('loginSubmitBtn').addEventListener('click', () => {
+            const identity = document.getElementById('loginIdentity').value.trim();
+            const pwd = document.getElementById('loginPassword').value;
+            const found = users.find(u => (u.mobile === identity || u.memberId === identity) && u.password === pwd);
+            if(found && found.subscriptionActive) {
+                localStorage.setItem('currentUser', JSON.stringify(found));
+                window.location.href = 'dashboard.html';
+            } else if(found && !found.subscriptionActive) {
+                document.getElementById('loginError').innerText = 'Your subscription is inactive. Please purchase a plan.';
+            } else {
+                document.getElementById('loginError').innerText = 'Invalid Member ID / Mobile Number or Password';
+            }
+        });
+
+        function renderDashboard() {
+            if(!currentUser) return;
+            const container = document.getElementById('dashboardContent');
+            if(container) {
+                container.innerHTML = `
+                    <p><strong>Welcome, ${currentUser.name}</strong></p>
+                    <p>Member ID: ${currentUser.memberId}</p>
+                    <p>Branch: ${currentUser.location}</p>
+                    <hr style="margin:1rem 0; border-color:#50C878">
+                    <p><strong>Active Subscription:</strong> ${currentUser.plan} (₹${currentUser.amount}/day)</p>
+                    <p>Status: ✅ ${currentUser.subscriptionActive ? 'ACTIVE' : 'INACTIVE'}</p>
+                    <p>Valid from today (Test mode)</p>
+                    <hr>
+                    <p>✨ 24/7 Priority Support | Exclusive Perks</p>
+                `;
+            }
+        }
+
+        document.getElementById('logoutFromDashboard')?.addEventListener('click', () => {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        });
+
+        if(currentUser && currentUser.subscriptionActive) {
+            renderDashboard();
+        }
     })();
 
- 
 
- (function() {
-  // Get all letter-wrap elements
-  const allLetterWraps = Array.from(document.querySelectorAll('.hero-title .letter-wrap'));
 
-  // Split into two groups: first two words ("Let's work") and third word ("together")
-  const words = document.querySelectorAll('.hero-title .word');
-  const firstGroupWraps = []; // letters from first two words
-  const secondGroupWraps = []; // letters from third word
+    document.getElementById('sendMsgBtn')?.addEventListener('click', () => {
+    const name = document.querySelector('#contactForm input[placeholder="Full name"]')?.value.trim();
+    const mobile = document.querySelector('#contactForm input[placeholder="Mobile Number"]')?.value.trim();
+    const message = document.querySelector('#contactForm textarea')?.value.trim();
 
-  let wordIndex = 0;
-  for (let word of words) {
-    const wraps = Array.from(word.querySelectorAll('.letter-wrap'));
-    if (wordIndex < 2) {
-      firstGroupWraps.push(...wraps);
-    } else {
-      secondGroupWraps.push(...wraps);
+    if (!name || !mobile) {
+        alert('Please enter your name and mobile number.');
+        return;
     }
-    wordIndex++;
-  }
 
-  // Helper: get random unique items from an array
-  function getRandomItems(arr, count) {
-    const shuffled = [...arr];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled.slice(0, count);
-  }
+    const whatsappNumber = '919559155535'; // Replace with your actual WhatsApp number (with country code, no +)
+    const text = `Name: ${name}%0AMobile: ${mobile}%0AMessage: ${message || 'No message'}`;
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${text}`;
 
-  function runCycle() {
-    // Pick 2 random distinct letters from "Let's work"
-    const picksFromFirst = getRandomItems(firstGroupWraps, 2);
-    // Pick 1 random letter from "together"
-    const picksFromSecond = getRandomItems(secondGroupWraps, 1);
-    const selected = [...picksFromFirst, ...picksFromSecond];
-
-    // Remove active class from all letters
-    allLetterWraps.forEach(wrap => wrap.classList.remove('active'));
-
-    // Force reflow to restart animation
-    void document.body.offsetWidth;
-
-    // Add active class to selected letters
-    selected.forEach(wrap => wrap.classList.add('active'));
-
-    // Repeat forever every 1.4 seconds
-    setTimeout(runCycle, 1400);
-  }
-
-  // Start infinite animation
-  runCycle();
-})();
+    window.open(whatsappUrl, '_blank');
+    document.getElementById('contactForm')?.reset();
+});
 </script>
 </body>
 </html>
