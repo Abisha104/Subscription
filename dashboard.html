@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Member Dashboard | Prince Group</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --bg:#07140d;
+    --card:#102219;
+    --card2:#142d21;
+    --primary:#52d67f;
+    --primary-light:#7dffb2;
+    --text:#ffffff;
+    --muted:#9fb9aa;
+    --border:rgba(125,255,178,0.12);
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:
+        radial-gradient(circle at top left,rgba(82,214,127,0.08),transparent 30%),
+        radial-gradient(circle at bottom right,rgba(82,214,127,0.06),transparent 30%),
+        var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* Background Glow */
+
+.blur{
+    position:fixed;
+    width:350px;
+    height:350px;
+    border-radius:50%;
+    filter:blur(100px);
+    z-index:-1;
+}
+
+.blur1{
+    top:-120px;
+    left:-100px;
+    background:rgba(82,214,127,0.08);
+}
+
+.blur2{
+    bottom:-140px;
+    right:-100px;
+    background:rgba(82,214,127,0.05);
+}
+
+/* Wrapper */
+
+.dashboard-wrapper{
+    max-width:1150px;
+    margin:auto;
+    padding:2rem 1.2rem 4rem;
+}
+
+/* Topbar */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:1rem;
+    margin-bottom:2rem;
+    flex-wrap:wrap;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:1rem;
+}
+
+.brand-logo{
+    width:62px;
+    height:62px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#52d67f,#17874a);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.4rem;
+    font-weight:900;
+    box-shadow:0 15px 30px rgba(82,214,127,0.22);
+}
+
+.brand h1{
+    font-size:1.8rem;
+    font-weight:800;
+    line-height:1.1;
+}
+
+.brand p{
+    margin-top:5px;
+    color:var(--muted);
+    font-size:0.95rem;
+}
+
+.status-badge{
+    background:rgba(82,214,127,0.1);
+    border:1px solid rgba(82,214,127,0.25);
+    color:#7dffb2;
+    padding:0.9rem 1.3rem;
+    border-radius:999px;
+    font-size:0.92rem;
+    font-weight:700;
+    backdrop-filter:blur(10px);
+}
+
+/* Grid */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:1.4fr 0.8fr;
+    gap:1.5rem;
+}
+
+/* Card */
+
+.card{
+    background:linear-gradient(180deg,rgba(20,45,33,0.97),rgba(12,28,20,0.97));
+    border:1px solid var(--border);
+    border-radius:32px;
+    padding:2rem;
+    backdrop-filter:blur(18px);
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+.card-title{
+    font-size:1.1rem;
+    font-weight:800;
+    margin-bottom:1.5rem;
+}
+
+/* Profile */
+
+.profile-header{
+    display:flex;
+    align-items:center;
+    gap:1rem;
+    margin-bottom:2rem;
+}
+
+.avatar{
+    width:72px;
+    height:72px;
+    border-radius:22px;
+    background:linear-gradient(135deg,#52d67f,#17874a);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.6rem;
+    font-weight:900;
+    box-shadow:0 10px 25px rgba(82,214,127,0.2);
+}
+
+.profile-name{
+    font-size:1.45rem;
+    font-weight:800;
+}
+
+.profile-id{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:0.95rem;
+}
+
+/* Info Grid */
+
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1rem;
+}
+
+.info-box{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.05);
+    border-radius:22px;
+    padding:1rem;
+}
+
+.info-label{
+    color:var(--muted);
+    font-size:0.85rem;
+    margin-bottom:0.55rem;
+}
+
+.info-value{
+    font-size:1rem;
+    font-weight:700;
+    word-break:break-word;
+}
+
+/* Notice */
+
+.notice{
+    margin-top:1.5rem;
+    background:rgba(82,214,127,0.08);
+    border:1px solid rgba(82,214,127,0.15);
+    border-radius:22px;
+    padding:1.2rem;
+    line-height:1.7;
+    color:#d7ffe5;
+}
+
+/* Right */
+
+.plan-card{
+    text-align:center;
+}
+
+.plan-badge{
+    display:inline-block;
+    background:rgba(82,214,127,0.14);
+    border:1px solid rgba(82,214,127,0.22);
+    color:#7dffb2;
+    padding:0.45rem 1rem;
+    border-radius:999px;
+    font-size:0.8rem;
+    font-weight:700;
+    margin-bottom:1rem;
+}
+
+.plan-price{
+    font-size:3rem;
+    font-weight:900;
+    margin-bottom:0.3rem;
+}
+
+.plan-price span{
+    font-size:1rem;
+    color:var(--muted);
+    font-weight:600;
+}
+
+.plan-desc{
+    color:var(--muted);
+    line-height:1.7;
+    margin-bottom:2rem;
+}
+
+/* Billing */
+
+.billing-row{
+    display:flex;
+    justify-content:space-between;
+    padding:1rem 0;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+}
+
+.billing-row:last-child{
+    border-bottom:none;
+}
+
+/* Buttons */
+
+.action-buttons{
+    display:flex;
+    gap:1rem;
+    margin-top:2rem;
+}
+
+.btn{
+    flex:1;
+    border:none;
+    padding:1rem;
+    border-radius:18px;
+    font-size:0.95rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.25s ease;
+}
+
+.btn-primary{
+    background:linear-gradient(135deg,#52d67f,#1a9d55);
+    color:white;
+    box-shadow:0 12px 25px rgba(82,214,127,0.18);
+}
+
+.btn-primary:hover{
+    transform:translateY(-2px);
+}
+
+.btn-secondary{
+    background:rgba(255,255,255,0.05);
+    color:white;
+    border:1px solid rgba(255,255,255,0.06);
+}
+
+.btn-secondary:hover{
+    background:rgba(255,255,255,0.08);
+}
+
+/* Mobile */
+
+@media(max-width:900px){
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .card{
+        padding:1.3rem;
+        border-radius:26px;
+    }
+
+    .brand h1{
+        font-size:1.45rem;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .plan-price{
+        font-size:2.5rem;
+    }
+
+    .action-buttons{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="blur blur1"></div>
+<div class="blur blur2"></div>
+
+<div class="dashboard-wrapper">
+
+    <!-- Topbar -->
+
+    <div class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                PG
+            </div>
+
+            <div>
+                <h1>Prince Group Dashboard</h1>
+                <p>Premium Membership Portal</p>
+            </div>
+
+        </div>
+
+        <div class="status-badge">
+            ● Membership Active
+        </div>
+
+    </div>
+
+    <!-- Main Grid -->
+
+    <div class="dashboard-grid">
+
+        <!-- Left -->
+
+        <div class="card">
+
+            <div class="profile-header">
+
+                <div class="avatar" id="avatarLetter">
+                    P
+                </div>
+
+                <div>
+
+                    <div class="profile-name" id="customerName">
+                        Member Name
+                    </div>
+
+                    <div class="profile-id" id="memberId">
+                        Member ID
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card-title">
+                Account Information
+            </div>
+
+            <div class="info-grid">
+
+                <div class="info-box">
+                    <div class="info-label">Branch Location</div>
+                    <div class="info-value" id="branch">-</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Mobile Number</div>
+                    <div class="info-value" id="mobile">-</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Subscription Start</div>
+                    <div class="info-value" id="startDate">-</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Renewal Date</div>
+                    <div class="info-value" id="endDate">-</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Payment Method</div>
+                    <div class="info-value">
+                        Razorpay AutoPay
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Payment ID</div>
+                    <div class="info-value" id="paymentId">
+                        -
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="notice">
+                Your subscription is active with secure automatic renewal enabled. Payments will be processed automatically on your billing date for uninterrupted access.
+            </div>
+
+            <div class="action-buttons">
+
+                <button class="btn btn-primary">
+                    Manage Subscription
+                </button>
+
+                <button class="btn btn-secondary" id="logoutBtn">
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Right -->
+
+        <div class="card plan-card">
+
+            <div class="plan-badge">
+                PREMIUM PLAN
+            </div>
+
+            <div class="plan-price">
+                ₹<span id="amount">0</span>
+            </div>
+
+            <div class="plan-desc">
+                Daily premium subscription with uninterrupted access and automatic renewal support.
+            </div>
+
+            <div class="card-title" style="text-align:left;">
+                Billing Summary
+            </div>
+
+            <div class="billing-row">
+                <span>Subscription Plan</span>
+                <strong id="plan">-</strong>
+            </div>
+
+            <div class="billing-row">
+                <span>Auto Pay</span>
+                <strong id="autopay">Enabled</strong>
+            </div>
+
+            <div class="billing-row">
+                <span>Status</span>
+                <strong style="color:#7dffb2;">
+                    ACTIVE
+                </strong>
+            </div>
+
+            <div class="billing-row">
+                <span>Next Billing</span>
+                <strong id="nextBilling">
+                    -
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+    /* Get User */
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+
+    console.log(user);
+
+    /* Redirect if not logged in */
+    if (!user || !user.subscriptionActive) {
+        window.location.href = 'login.html';
+    }
+
+    /* Format Date */
+    function formatDate(dateString) {
+        if (!dateString) return 'Not Available';
+        const d = new Date(dateString);
+        if (isNaN(d.getTime())) return 'Not Available';
+        return d.toLocaleDateString('en-IN', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+        });
+    }
+
+    /* Safe Value Function */
+    function getValue(...values) {
+        for (let value of values) {
+            if (value !== undefined && value !== null && value !== '') {
+                return value;
+            }
+        }
+        return 'Not Available';
+    }
+
+    /* Migration for older users without startDate / endDate / autoPayEnabled */
+    let updated = false;
+    if (!user.startDate) {
+        user.startDate = new Date().toISOString();
+        user.endDate = new Date(Date.now() + 30 * 86400000).toISOString();
+        user.autoPayEnabled = true;
+        updated = true;
+    }
+    if (user.autoPayEnabled === undefined) {
+        user.autoPayEnabled = true;
+        updated = true;
+    }
+    if (updated) {
+        // Update user in localStorage
+        let allUsers = JSON.parse(localStorage.getItem('prince_users') || '[]');
+        const idx = allUsers.findIndex(u => u.memberId === user.memberId);
+        if (idx !== -1) {
+            allUsers[idx] = user;
+            localStorage.setItem('prince_users', JSON.stringify(allUsers));
+            localStorage.setItem('currentUser', JSON.stringify(user));
+        }
+    }
+
+    /* Extract user data */
+    const customerName = getValue(user.name, user.full_name, user.username);
+    const memberId = getValue(user.memberId, user.member_id);
+    const branch = getValue(user.location, user.branch);
+    const mobile = getValue(user.mobile, user.phone, user.mobile_number);
+    const startDate = getValue(user.startDate, user.subscriptionStart, user.subscription_start);
+    const endDate = getValue(user.endDate, user.renewalDate, user.renewal_date);
+    const paymentId = getValue(user.razorpayPaymentId, user.paymentId);
+    const amount = getValue(user.amount, user.price);
+    const plan = getValue(user.plan, user.subscriptionPlan);
+
+    /* Set values in HTML */
+    document.getElementById('customerName').innerText = customerName;
+    document.getElementById('memberId').innerText = memberId;
+    document.getElementById('branch').innerText = branch;
+    document.getElementById('mobile').innerText = mobile;
+    document.getElementById('startDate').innerText = formatDate(startDate);
+    document.getElementById('endDate').innerText = formatDate(endDate);
+    document.getElementById('paymentId').innerText = paymentId;
+    document.getElementById('amount').innerText = amount;
+    document.getElementById('plan').innerText = plan;
+    document.getElementById('nextBilling').innerText = formatDate(endDate);
+
+    /* Avatar letter */
+    document.getElementById('avatarLetter').innerText = customerName.charAt(0).toUpperCase();
+
+    /* AutoPay status */
+    document.getElementById('autopay').innerText = user.autoPayEnabled ? 'Enabled' : 'Disabled';
+
+    /* Logout button */
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'login.html';
+    });
+</script>
+
+</body>
+</html>
